@@ -30,40 +30,40 @@ export const leftChange = (row, cell) => {
   return row;
 };
 
-export const upChange = (obj, row, cell) => {
-  if (!obj[row - 1]) return obj;
+export const upChange = (arr, row, cell) => {
+  if (!arr[row - 1]) return arr;
 
-  if (obj[row - 1][cell] === 0) {
-    obj[row - 1][cell] = obj[row][cell];
-    obj[row][cell] = 0;
+  if (arr[row - 1][cell] === 0) {
+    arr[row - 1][cell] = arr[row][cell];
+    arr[row][cell] = 0;
 
-    return upChange(obj, row - 1, cell);
+    return upChange(arr, row - 1, cell);
   }
 
-  else if (obj[row - 1][cell] === obj[row][cell]) {
-    obj[row - 1][cell] += obj[row][cell];
-    obj[row - 1][cell] += 'c';
-    obj[row][cell] = 0;
+  else if (arr[row - 1][cell] === arr[row][cell]) {
+    arr[row - 1][cell] += arr[row][cell];
+    arr[row - 1][cell] += 'c';
+    arr[row][cell] = 0;
   }
 
-  return obj;
+  return arr;
 };
 
-export const downChange = (obj, row, cell) => {
-  if (!obj[row + 1]) return obj;
+export const downChange = (arr, row, cell) => {
+  if (!arr[row + 1]) return arr;
 
-  if (obj[row + 1][cell] === 0) {
-    obj[row + 1][cell] = obj[row][cell];
-    obj[row][cell] = 0;
+  if (arr[row + 1][cell] === 0) {
+    arr[row + 1][cell] = arr[row][cell];
+    arr[row][cell] = 0;
 
-    return downChange(obj, row + 1, cell);
+    return downChange(arr, row + 1, cell);
   }
 
-  else if (obj[row + 1][cell] === obj[row][cell]) {
-    obj[row + 1][cell] += obj[row][cell];
-    obj[row + 1][cell] += 'c';
-    obj[row][cell] = 0;
+  else if (arr[row + 1][cell] === arr[row][cell]) {
+    arr[row + 1][cell] += arr[row][cell];
+    arr[row + 1][cell] += 'c';
+    arr[row][cell] = 0;
   }
 
-  return obj;
+  return arr;
 };

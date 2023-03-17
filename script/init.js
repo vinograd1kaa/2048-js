@@ -9,51 +9,51 @@ document.addEventListener('keydown', function(event) {
   if (event.code.includes('Arrow')) {
     const type = event.code.slice(5, event.code.length).toUpperCase();
 
-    renderPlayground(move(playgroundObj, type), false);
-    calculateScore(playgroundObj, scoreCounter);
+    renderPlayground(move(playground, type), false);
+    calculateScore(playground, scoreCounter);
   }
 });
 
 restartButton.addEventListener('click', newGame);
 retryButton.addEventListener('click', newGame);
 
-let playgroundObj = {
-  0: [0, 0, 0, 0],
-  1: [0, 0, 0, 0],
-  2: [0, 0, 0, 0],
-  3: [0, 0, 0, 0],
-};
+let playground = [
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0],
+];
 
-function renderPlayground(obj, newGame) {
+function renderPlayground(arr, newGame) {
   tileContainer.innerHTML = '';
 
-  const emptyCells = Object.keys(obj).reduce((acc, row) => {
-    obj[row].forEach((cell, idx) => {
+  const emptyCells = arr.reduce((acc, row, rowIdx) => {
+    row.forEach((cell, cellIdx) => {
       if (cell === 0) {
-        return acc.push(`${row}${idx}`);
+        return acc.push(`${rowIdx}${cellIdx}`);
       }
     })
     return acc;
   },  []);
 
-  if (emptyCells.length === 0 && !isCellsMovable(obj)) {
+  if (emptyCells.length === 0 && !isCellsMovable(arr)) {
     return modal.style.display = 'block';
   }
 
   if (emptyCells.length !== 0) {
-    obj = spawnRandomCell(obj, newGame);
+    arr = spawnRandomCell(arr, newGame);
   }
 
-  Object.keys(obj).forEach((row) => {
-    obj[row].forEach((cell, idx) => {
+  arr.forEach((row, rowIdx) => {
+    row.forEach((cell, cellIdx) => {
       if (cell !== 0) {
-        tileContainer.insertAdjacentHTML("beforeend", renderCustomCellHtml(row, cell, idx));
+        tileContainer.insertAdjacentHTML("beforeend", renderCustomCellHtml(rowIdx, cell, cellIdx));
       }
     })
   })
 }
 
-renderPlayground(playgroundObj, true);
+renderPlayground(playground, true);
 
 function renderCustomCellHtml(row, cell, idx) {
   const className = `tile tile-${cell} tile-position-${row}-${idx}`;
@@ -69,24 +69,24 @@ function newGame() {
   modal.style.display = 'none';
   scoreCounter.innerText = 0;
 
-  playgroundObj = {
-    0: [0, 0, 0, 0],
-    1: [0, 0, 0, 0],
-    2: [0, 0, 0, 0],
-    3: [0, 0, 0, 0],
-  };
+  playground = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ];
 
-  renderPlayground(playgroundObj, true);
+  renderPlayground(playground, true);
 }
 
-function isCellsMovable(obj) {
-  const availableMoveCells = Object.keys(obj).reduce((acc, row) => {
-    obj[row].forEach((cell, idx) => {
+function isCellsMovable(arr) {
+  const availableMoveCells = arr.reduce((acc, row, rowIdx) => {
+    row.forEach((cell, cellIdx) => {
       if (
-        obj[row][idx] === obj[row][idx + 1] ||
-        obj[row][idx] === obj[row][idx - 1] ||
-        (obj[row - 1] && obj[row][idx] === obj[row - 1][idx]) ||
-        (obj[row + 1] && obj[row][idx] === obj[row + 1][idx])
+        cell === row[cellIdx + 1] ||
+        cell === row[cellIdx - 1] ||
+        (arr[rowIdx - 1] && cell === arr[row - 1][cellIdx]) ||
+        (arr[rowIdx + 1] && cell === arr[row + 1][cellIdx])
       ) {
         acc.push(true);
       }
@@ -97,9 +97,9 @@ function isCellsMovable(obj) {
   return Boolean(availableMoveCells.length);
 }
 
-function calculateScore(obj, counter) {
-  const score = Object.keys(obj).reduce((acc, row) => {
-    obj[row].forEach((cell) => {
+function calculateScore(arr, counter) {
+  const score = arr.reduce((acc, row) => {
+    row.forEach((cell) => {
       if (cell === 0 || cell === 2) return;
       return acc += cell;
     })
@@ -119,11 +119,11 @@ function calculateScore(obj, counter) {
   counter.innerText = score;
 }
 
-function spawnRandomCell(obj, newGame) {
-  const emptyCells = Object.keys(obj).reduce((acc, row) => {
-    obj[row].forEach((cell, idx) => {
+function spawnRandomCell(arr, newGame) {
+  const emptyCells = arr.reduce((acc, row, rowIdx) => {
+    row.forEach((cell, idx) => {
       if (cell === 0) {
-        return acc.push(`${row}${idx}`);
+        return acc.push(`${rowIdx}${idx}`);
       }
     })
     return acc;
@@ -134,14 +134,14 @@ function spawnRandomCell(obj, newGame) {
     const rowToChange = emptyCells[rand][0];
     const cellToChange = emptyCells[rand][1];
 
-    obj[rowToChange][cellToChange] = 2;
+    arr[rowToChange][cellToChange] = 2;
   }
 
   if (newGame) {
-    spawnRandomCell(obj);
+    spawnRandomCell(arr);
   }
 
-  return obj;
+  return arr;
 }
 
 

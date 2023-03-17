@@ -1,77 +1,71 @@
 import { downChange, leftChange, rightChange, upChange } from "./move_functions.js";
 
-const leadToNumbers = (obj) => {
-  Object.keys(obj).forEach((row) => {
-    const result = obj[row].map((cell) => {
+const leadToNumbers = (arr) => {
+  arr.map((row) => {
+    row.map((cell, idx) => {
       if (typeof cell === "string") {
-        return Number(cell.slice(0, -1));
+        row[idx] = Number(cell.slice(0, -1));
       }
-      return cell;
     })
-
-    obj[row] = result;
   })
-
-  return obj;
+  return arr;
 }
 
-export function move(obj, type) {
+export function move(arr, type) {
   switch (type) {
     case 'LEFT': {
-      Object.keys(obj).forEach((row) => {
-        obj[row].map((cell, idx) => {
+      arr.forEach((row) => {
+        row.map((cell, cellIdx) => {
           if (cell !== 0) {
-            leftChange(obj[row], idx);
+            leftChange(row, cellIdx);
           }
         })
       })
 
-      return obj;
+      return arr;
     }
 
     case 'RIGHT': {
-      Object.keys(obj).forEach((row) => {
-        for (var idx = obj[row].length - 1; idx >= 0; idx--) {
-          const cell = obj[row][idx];
-
-          if (cell !== 0) {
-            rightChange(obj[row], idx);
+      arr.forEach((row) => {
+        for (var cellIdx = row.length - 1; cellIdx >= 0; cellIdx--) {
+          if (row[cellIdx] !== 0) {
+            rightChange(row, cellIdx);
           }
         }
       })
 
-      leadToNumbers(obj);
+      leadToNumbers(arr);
 
-      return obj;
+      return arr;
     }
     case 'UP': {
-      Object.keys(obj).forEach((row) => {
-        obj[row].map((cell, idx) => {
+      arr.forEach((row, rowIdx) => {
+        row.map((cell, cellIdx) => {
           if (cell !== 0) {
-            upChange(obj, row, idx);
+            upChange(arr, rowIdx, cellIdx);
           }
         })
       })
 
-      leadToNumbers(obj);
+      leadToNumbers(arr);
 
-      return obj;
+      return arr;
     }
 
     case 'DOWN': {
-      for (var row = Object.keys(obj).length - 1; row >= 0; row--) {
-        obj[row].map((cell, idx) => {
+      for (var rowIdx = arr.length - 1; rowIdx >= 0; rowIdx--) {
+        arr[rowIdx].forEach((cell, cellIdx) => {
           if (cell >= 0) {
-            downChange(obj, row, idx);
+            downChange(arr, rowIdx, cellIdx);
           }
         })
       }
 
-      leadToNumbers(obj);
+      leadToNumbers(arr);
 
-      return obj;
+      return arr;
     }
 
-    default: return 'invalid type';
+    default: return arr;
   }
 }
