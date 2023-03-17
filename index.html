@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2048 game!</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/game.css">
+    <link rel="stylesheet" href="./styles/tiles.css">
+    <link rel="stylesheet" href="./styles/modal.css">
+    <script src="https://kit.fontawesome.com/ef739b4f9e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<section class="game-section">
+    <div class="heading">
+        <h1 class="title">2048</h1>
+        <div class="score-container">
+            <h1>SCORE</h1>
+            <h2 class="score-counter">0</h2>
+            <div class="score-addition"></div>
+        </div>
+    </div>
+
+    <div class="game-intro">
+        <h2>Use the arrows to play!</h2>
+        <div class="game-intro-icons">
+            <i class="fas fa-arrow-up"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-down"></i>
+            <i class="fas fa-arrow-right"></i>
+        </div>
+        <button class="restart-button">New Game</button>
+    </div>
+
+    <div class="game-playground">
+        <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+        </div>
+        <div class="tile-container"></div>
+    </div>
+</section>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Game Over!</h1>
+            <button class="retry-button">Try again</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="script/move_functions.js"></script>
+<script type="module" src="./script/helpers.js"></script>
+<script type="module" src="./script/init.js"></script>
+</body>
+</html>
