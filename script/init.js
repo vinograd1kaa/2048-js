@@ -55,8 +55,8 @@ function renderPlayground(arr, newGame) {
 
 renderPlayground(playground, true);
 
-function renderCustomCellHtml(row, cell, idx) {
-  const className = `tile tile-${cell} tile-position-${row}-${idx}`;
+function renderCustomCellHtml(row, cell, cellIdx) {
+  const className = `tile tile-${cell} tile-position-${row}-${cellIdx}`;
 
   return `
     <div class="${className}">

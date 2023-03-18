@@ -1,8 +1,8 @@
 import { downChange, leftChange, rightChange, upChange } from "./move_functions.js";
 
 const leadToNumbers = (arr) => {
-  arr.map((row) => {
-    row.map((cell, idx) => {
+  arr.forEach((row) => {
+    row.forEach((cell, idx) => {
       if (typeof cell === "string") {
         row[idx] = Number(cell.slice(0, -1));
       }
@@ -15,7 +15,7 @@ export function move(arr, type) {
   switch (type) {
     case 'LEFT': {
       arr.forEach((row) => {
-        row.map((cell, cellIdx) => {
+        row.forEach((cell, cellIdx) => {
           if (cell !== 0) {
             leftChange(row, cellIdx);
           }
@@ -40,7 +40,7 @@ export function move(arr, type) {
     }
     case 'UP': {
       arr.forEach((row, rowIdx) => {
-        row.map((cell, cellIdx) => {
+        row.forEach((cell, cellIdx) => {
           if (cell !== 0) {
             upChange(arr, rowIdx, cellIdx);
           }
