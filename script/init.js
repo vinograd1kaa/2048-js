@@ -85,8 +85,8 @@ function isCellsMovable(arr) {
       if (
         cell === row[cellIdx + 1] ||
         cell === row[cellIdx - 1] ||
-        (arr[rowIdx - 1] && cell === arr[row - 1][cellIdx]) ||
-        (arr[rowIdx + 1] && cell === arr[row + 1][cellIdx])
+        (arr[rowIdx - 1] && cell === arr[rowIdx - 1][cellIdx]) ||
+        (arr[rowIdx + 1] && cell === arr[rowIdx + 1][cellIdx])
       ) {
         acc.push(true);
       }
